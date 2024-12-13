@@ -31,12 +31,6 @@ export const authenticate = async (email, password, request) => {
       if (user.password === password) {
         console.log("User authenticated:", user);
 
-        // Check if session is available
-        if (!request.session) {
-          console.warn("Session not available on request object");
-          return { email: user.email, role: user.role }; // Proceed without session
-        }
-
         // Set session data
         request.session.adminUser = { email: user.email, role: user.role };
 
