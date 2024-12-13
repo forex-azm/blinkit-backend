@@ -16,7 +16,9 @@ export const sessionStore = new MongoDBStore({
 sessionStore.on("error", (error) => {
   console.log("session store error", error);
 });
-
+sessionStore.on("connected", () => {
+  console.log("MongoDB session store connected successfully");
+});
 export const authenticate = async (email, password) => {
   if (email && password) {
     try {
