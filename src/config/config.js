@@ -29,14 +29,14 @@ export const authenticate = async (email, password, request) => {
 
       if (user.password === password) {
         console.log("User authenticated:", user);
-
+        console.log(request);
         // Set session data
         if (request && request.session) {
           request.session.adminUser = { email: user.email, role: user.role };
 
           // Log session data to verify creation
           console.log("Session data after authentication:", request.session);
-          await request.session.save();
+          
         } else {
           console.warn("Session not available on request object");
         }
