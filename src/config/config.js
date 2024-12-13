@@ -24,11 +24,18 @@ export const authenticate = async (email, password, request) => {
     try {
       const user = await Admin.findOne({ email });
       if (!user) {
+        console.warn("User not found");
         return null;
       }
 
       if (user.password === password) {
         console.log("User authenticated:", user);
+
+        // Check if session is available
+        if (!request.session) {
+          console.warn("Session not available on request object");
+          return { email: user.email, role: user.role }; // Proceed without session
+        }
 
         // Set session data
         request.session.adminUser = { email: user.email, role: user.role };
@@ -38,13 +45,8 @@ export const authenticate = async (email, password, request) => {
         console.log("Session saved:", request.session);
 
         return { email: user.email, role: user.role };
-          
-        } else {
-          console.warn("Session not available on request object");
-        }
-
-        return { email: user.email, role: user.role };
       } else {
+        console.warn("Invalid password");
         return null;
       }
     } catch (error) {
@@ -52,8 +54,9 @@ export const authenticate = async (email, password, request) => {
       return null;
     }
   }
+
+  console.warn("Email or password missing");
   return null;
 };
-
 export const PORT = process.env.PORT || 4000;
 export const COOKIE_PASSWORD = process.env.COOKIE_PASSWORD;
