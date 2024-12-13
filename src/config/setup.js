@@ -59,13 +59,7 @@ export const buildAdminRouter = async (app) => {
   await AdminJSFastify.buildAuthenticatedRouter(
     admin,
     {
-      authenticate: async (email, password) => {
-        const user = await authenticate(email, password);
-        if (user) {
-          return user;
-        }
-        return null;
-      },
+      authenticate,
       cookiePassword: COOKIE_PASSWORD,
       cookieName: "adminjs_panel_setting_up",
     },
@@ -82,13 +76,5 @@ export const buildAdminRouter = async (app) => {
         maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
       },
     },
-    async (request, reply, context) => {
-      if (context?.admin) {
-        // Set session data here
-        request.session.adminUser = context.admin;
-        await request.session.save();
-        console.log("Session data set:", request.session);
-      }
-    }
   );
 };
