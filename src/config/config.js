@@ -19,7 +19,7 @@ sessionStore.on("error", (error) => {
 sessionStore.on("connected", () => {
   console.log("MongoDB session store connected successfully");
 });
-export const authenticate = async (email, password) => {
+export const authenticate = async (request, email, password) => {
   if (email && password) {
     try {
       const user = await Admin.findOne({ email });
