@@ -28,8 +28,15 @@ export const authenticate = async (email, password) => {
       }
 
       if (user.password === password) {
-        console.log(user);
-        return Promise.resolve({ email: user.email, password: user.password });
+                console.log("User authenticated:", user);
+
+        // Set session data
+        request.session.adminUser = { email: user.email, role: user.role };
+
+        // Log session data to verify creation
+        console.log("Session data after authentication:", request.session);
+
+        return { email: user.email, role: user.role };
       } else {
         return null;
       }
