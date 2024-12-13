@@ -10,17 +10,7 @@ import { Socket } from "socket.io";
 const start = async () => {
   await connectDB(process.env.MONGO_URI);
   const app = Fastify();
-  app.addHook("onRequest", async (request, reply) => {
-  console.log("Incoming request session:", request.session);
-});
 
-app.addHook("preHandler", async (request, reply) => {
-  console.log("Pre-handler session state:", request.session);
-});
-
-app.addHook("onSend", async (request, reply, payload) => {
-  console.log("Outgoing response session:", request.session);
-});
   app.register(fastifySocketIO, {
     cors: {
       origin: "*",
