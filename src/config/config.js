@@ -8,9 +8,9 @@ const MongoDBStore = ConnectMongoDBSession(fastifySession);
 export const sessionStore = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "sessions",
-  // connectionOptions: {
-  //   serverSelectionTimeoutMS: 30000,
-  // },
+  connectionOptions: {
+    serverSelectionTimeoutMS: 30000,
+  },
 });
 
 sessionStore.on("error", (error) => {
