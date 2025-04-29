@@ -71,7 +71,7 @@ export const buildAdminRouter = async (app) => {
       secret: COOKIE_PASSWORD,
       cookie: {
         httpOnly: true, // Always true for security
-        secure: true, // Only secure in production (HTTPS)
+        secure: process.env.NODE_ENV === "production",
         sameSite: "lax", // CSRF protection
       },
     },
