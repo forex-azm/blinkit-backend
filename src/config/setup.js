@@ -66,14 +66,14 @@ export const buildAdminRouter = async (app) => {
     app,
     {
       store: sessionStore,
-      saveUninitialized: false,
-      resave: false,
+      saveUninitialized: true,
+      resave: true,
       secret: COOKIE_PASSWORD,
       cookie: {
-        httpOnly: true, // Always true for security
+        httpOnly: process.env.NODE_ENV === "production",
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax", // CSRF protection
       },
+      name: "adminjs",
     },
   );
 };
